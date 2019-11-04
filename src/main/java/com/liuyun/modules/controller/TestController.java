@@ -1,5 +1,6 @@
 package com.liuyun.modules.controller;
 
+import com.liuyun.config.redis.RedisUtils;
 import com.liuyun.modules.pojo.entity.TestEntity;
 import com.liuyun.modules.service.TestService;
 import lombok.extern.slf4j.Slf4j;
@@ -26,8 +27,13 @@ public class TestController {
     @Autowired
     private TestService testService;
 
+    @Autowired
+    private RedisUtils redisUtils;
+
     @GetMapping(value = "queryAll")
     public List<TestEntity> queryAll() {
+        System.out.println(redisUtils.set("aaa", "bbbb"));
+        System.out.println(redisUtils.get("aaa"));
         return testService.queryAll();
     }
 }
