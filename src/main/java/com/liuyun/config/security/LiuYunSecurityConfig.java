@@ -42,6 +42,12 @@ public class LiuYunSecurityConfig extends WebSecurityConfigurerAdapter {
     private LiuYunAuthenticationEntryPoint liuYunAuthenticationEntryPoint;
 
     /**
+     * 没有权限
+     */
+    @Autowired
+    private LiuYunAccessDeniedHandler liuYunAccessDeniedHandler;
+
+    /**
      * @description 重写 Spring Security提供的Web应用安全配置的适配器
      * @author 王栋
      * @date 2019/10/29 11:17
@@ -57,6 +63,8 @@ public class LiuYunSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/login")
                 .successHandler(liuYunAuthenticationSuccessHandler) // 登录成功处理
                 .failureHandler(liuYunAuthenticationFailureHandler) // 登录失败处理
+                .and().exceptionHandling()
+                .accessDeniedHandler(liuYunAccessDeniedHandler) // 权限不足处理
                 .and().authorizeRequests() // 授权配置
                 .antMatchers(openPath()).permitAll()
                 .anyRequest()  // 所有请求
